@@ -1,10 +1,10 @@
 #!/bin/bash
 
-if [ ! -d ".venv" ]; then
-	python3 -m venv .venv
-	echo "New virtual environment created"
-fi
+#if [ ! -d ".venv" ]; then
+#	python3 -m venv .venv
+#fi
 
+python3 -m venv .venv
 source .venv/bin/activate
 
 pip install --quiet -r requirements.txt
