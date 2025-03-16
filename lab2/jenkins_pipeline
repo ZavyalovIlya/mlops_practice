@@ -14,7 +14,7 @@ pipeline {
         stage("Connect to git") {
             steps {
                 
-                git branch: "patch-1", url: "https://github.com/ZavyalovIlya/mlops_practice"
+                git branch: "master", url: "https://github.com/ZavyalovIlya/mlops_practice"
                 
             }
         }
