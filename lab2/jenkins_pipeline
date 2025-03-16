@@ -1,10 +1,105 @@
 pipeline {
     agent any
+    
+    environment {
+        
+       WORK_DIR = "lab1" 
+       VENV_ACT = ".venv/bin/activate"
+    }
+    
+    
+
     stages {
-     stage('Hello') {
-                steps {
-                    echo 'Hello world'
+        
+        stage("Connect to git") {
+            steps {
+                
+                git branch: "patch-1", url: "https://github.com/ZavyalovIlya/mlops_practice"
+                
+            }
+        }
+        
+        stage ("Venv setup") {
+            steps {
+                
+                dir(WORK_DIR) {
+                    script {
+                        
+                        if (fileExists('.venv')) {
+                            echo "------- Vertual env exists"
+                        } else {
+                            echo "------- Vertual env not found, setting up..."
+                            sh "python3 -m venv .venv"
+                        }
+                    }
                 }
             }
-     }
+        }
+        
+        stage("Dependencies setup") {
+            steps {
+                
+                dir(WORK_DIR){
+                    
+                    sh "source .venv/bin/activate"
+                    
+                    echo "------- Installing required packages..."
+                    sh ".venv/bin/python3 -m pip install -r requirements.txt"
+                }
+            }
+        }
+        
+        stage("Data creation") {
+            steps {
+                
+                echo "------- Starting data creation"
+                dir(WORK_DIR){
+                    
+                    sh """
+                    . ${VENV_ACT}
+                    python3 data_creation.py"""
+                }
+            }
+        }
+        
+        stage("Data preprocessing") {
+            steps {
+                
+                echo "------- Starting data preprocessing"
+                dir(WORK_DIR){
+                    
+                    sh """
+                    . ${VENV_ACT}
+                    python3 data_preprocessing.py"""
+                }
+            }
+        }
+        
+        stage("Model preparation") {
+            steps {
+                
+                echo "------- Starting model preparation"
+                dir(WORK_DIR){
+                    
+                    sh """
+                    . ${VENV_ACT}
+                    python3 model_preparation.py"""
+                }
+            }
+        }
+        
+        stage("Model testing") {
+            steps {
+                
+                echo "------- Starting model testing"
+                dir(WORK_DIR){
+                    
+                    sh """
+                    . ${VENV_ACT}
+                    python3 model_testing.py"""
+                }
+            }
+        }
+    }
+    
 }
