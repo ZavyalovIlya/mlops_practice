@@ -3,3 +3,9 @@ target
 *.iml
 **/*.iml
 **/.env
+/lab4/titanic.csv
+/lab4/google_authenticate.py
+/lab4/client_secret.json
+/lab4/generated_token.json
+/lab4/token_oauth2client.json
+/lab4/titanic.csv

@@ -1,0 +1,6 @@
+[core]
+    remote = myremote
+['remote "myremote"']
+    url = gdrive://1PgGJSRQ5RTsqnv7dpKz0MdnLx7TTpRgN
+    gdrive_acknowledge_abuse = true
+    gdrive_user_credentials_file = ../generated_token.json
